@@ -2,7 +2,6 @@ package alura.com.br;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
