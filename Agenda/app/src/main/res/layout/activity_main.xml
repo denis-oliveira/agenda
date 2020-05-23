@@ -16,7 +16,8 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
-        app:backgroundTint="#F44336"
+        android:src="@drawable/ic_action_novo_aluno"
+        app:backgroundTint="#CF1A0D"
         app:fabSize="normal"
         app:srcCompat="@mipmap/ic_launcher" />
 
