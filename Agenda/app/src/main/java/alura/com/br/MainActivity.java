@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Change the title shown on the app bar
         setTitle("Lista de Alunos");
+        // Create collection of students
         List<String> alunos = new ArrayList<>(
                 Arrays.asList("Alex", "Fran", "José", "Maria", "Ana"));
         // Get view of the List View created in the layout using its ID
