@@ -1,4 +1,4 @@
-package alura.com.br;
+package alura.com.br.ui.activity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -11,22 +11,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import alura.com.br.R;
+
 // Using AppCompatActivity to load App Bar in the app and give support to older versions of Android
-public class MainActivity extends AppCompatActivity {
+public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // Run super class onCreate() method (it is mandatory to do that)
         super.onCreate(savedInstanceState);
         // Load the layout
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_lista_alunos);
         // Change the title shown on the app bar
         setTitle("Lista de Alunos");
         // Create collection of students
         List<String> alunos = new ArrayList<>(
                 Arrays.asList("Alex", "Fran", "José", "Maria", "Ana"));
         // Get view of the List View created in the layout using its ID
-        ListView listaDeAlunos = findViewById(R.id.activity_main_lista_de_alunos);
+        ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
         // Load the list of students in the ListView
         listaDeAlunos.setAdapter(new ArrayAdapter<>(
                 this,

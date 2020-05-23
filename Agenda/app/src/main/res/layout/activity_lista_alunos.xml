@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_main_fab_novo_aluno"
+        android:id="@+id/activity_lista_alunos_fab_novo_aluno"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -16,13 +16,12 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_action_novo_aluno"
+        app:srcCompat="@drawable/ic_action_novo_aluno"
         app:backgroundTint="#CF1A0D"
-        app:fabSize="normal"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:fabSize="normal"/>
 
     <ListView
-        android:id="@+id/activity_main_lista_de_alunos"
+        android:id="@+id/activity_lista_alunos_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
