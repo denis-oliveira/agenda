@@ -1,6 +1,5 @@
 package alura.com.br.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +17,11 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Change the title shown on the app bar
-        setTitle("Novo Aluno");
-
         // Set view content
         setContentView(R.layout.activity_formulario_aluno);
+
+        // Change the title shown on the app bar
+        setTitle("Novo aluno");
 
         final AlunoDAO dao = new AlunoDAO();
 
