@@ -28,8 +28,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
         // Change the title shown on the app bar
         setTitle("Lista de Alunos");
 
+        // get fab for new student button
         FloatingActionButton botaoNovoAluno =
                 findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
+
+        // Creates listener for button clicks (get click events)
         botaoNovoAluno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
