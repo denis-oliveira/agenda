@@ -1,11 +1,15 @@
 package alura.com.br.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
@@ -23,6 +27,22 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         // Change the title shown on the app bar
         setTitle("Lista de Alunos");
+
+        FloatingActionButton botaoNovoAluno =
+                findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
+        botaoNovoAluno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(
+                        ListaAlunosActivity.this,
+                        FormularioAlunoActivity.class));
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         // Class to store the list of students
         AlunoDAO dao = new AlunoDAO();

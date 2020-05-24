@@ -47,10 +47,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
                 // Save new student to the DAO
                 dao.salva(alunoCriado);
 
-                // Move from activity FormularioAlunoActivity to ListaAlunosActivity
-                startActivity(new Intent(FormularioAlunoActivity.this,
-                        ListaAlunosActivity.class)
-                );
+                // Finish the activity
+                finish();
             }
         });
     }
