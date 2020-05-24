@@ -17,6 +17,10 @@ import alura.com.br.R;
 // Using AppCompatActivity to load App Bar in the app and give support to older versions of Android
 public class ListaAlunosActivity extends AppCompatActivity {
 
+    private static final String TITULO_APP_BAR = "Lista de Alunos";
+    // Class to store the list of students
+    private final AlunoDAO dao = new AlunoDAO();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // Run super class onCreate() method (it is mandatory to do that)
@@ -26,8 +30,21 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
 
         // Change the title shown on the app bar
-        setTitle("Lista de Alunos");
+        setTitle(TITULO_APP_BAR);
 
+        // Set up FAB (floating action button) for new student
+        configuraFabNovoAluno();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Update list view with the list of students
+        configuraLista();
+    }
+
+    private void configuraFabNovoAluno() {
         // get fab for new student button
         FloatingActionButton botaoNovoAluno =
                 findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
@@ -36,20 +53,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
         botaoNovoAluno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(
-                        ListaAlunosActivity.this,
-                        FormularioAlunoActivity.class));
+                abreFormularioAlunoActivity();
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void abreFormularioAlunoActivity() {
+        startActivity(new Intent(this, FormularioAlunoActivity.class));
+    }
 
-        // Class to store the list of students
-        AlunoDAO dao = new AlunoDAO();
-
+    private void configuraLista() {
         // Get view of the List View created in the layout using its ID
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
 
