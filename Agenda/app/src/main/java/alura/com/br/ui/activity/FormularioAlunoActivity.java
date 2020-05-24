@@ -1,13 +1,14 @@
 package alura.com.br.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
 import alura.com.br.model.Aluno;
 
@@ -17,7 +18,13 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Change the title shown on the app bar
+        setTitle("Novo Aluno");
+
+        // Set view content
         setContentView(R.layout.activity_formulario_aluno);
+
+        final AlunoDAO dao = new AlunoDAO();
 
         // Creates views for the layout elements (button and text boxes)
         final EditText campoNome = findViewById(R.id.activity_formulario_aluno_nome);
@@ -37,8 +44,13 @@ public class FormularioAlunoActivity extends AppCompatActivity {
                 // Classe to store student information
                 Aluno alunoCriado = new Aluno(nome, telefone, email);
 
-                // Show student information
-                Toast.makeText(FormularioAlunoActivity.this, alunoCriado.getNome() + " - " + alunoCriado.getTelefone() + " - " + alunoCriado.getEmail(), Toast.LENGTH_SHORT).show();
+                // Save new student to the DAO
+                dao.salva(alunoCriado);
+
+                // Move from activity FormularioAlunoActivity to ListaAlunosActivity
+                startActivity(new Intent(FormularioAlunoActivity.this,
+                        ListaAlunosActivity.class)
+                );
             }
         });
     }

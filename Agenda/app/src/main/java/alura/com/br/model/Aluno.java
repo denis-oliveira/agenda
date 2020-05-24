@@ -1,5 +1,7 @@
 package alura.com.br.model;
 
+import androidx.annotation.NonNull;
+
 // Class to store student information
 public class Aluno {
     private final String nome;
@@ -12,15 +14,9 @@ public class Aluno {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getEmail() {
-        return email;
+    @NonNull
+    @Override
+    public String toString() {
+        return this.nome;
     }
 }
