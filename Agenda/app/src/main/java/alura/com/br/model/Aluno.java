@@ -17,15 +17,15 @@ public class Aluno implements Serializable {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public String getTelefone() {
-        return telefone;
+        return this.telefone;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     @NonNull
