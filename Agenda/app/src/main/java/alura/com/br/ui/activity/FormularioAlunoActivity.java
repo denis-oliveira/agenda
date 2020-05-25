@@ -13,7 +13,7 @@ import alura.com.br.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    private static final String TITULO_APP_BAR = "Novo aluno";
+    private static final String TITULO_APP_BAR = "Novo Aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;

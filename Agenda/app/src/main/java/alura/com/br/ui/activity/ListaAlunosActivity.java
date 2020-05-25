@@ -2,9 +2,12 @@ package alura.com.br.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
+import alura.com.br.model.Aluno;
 
 // Using AppCompatActivity to load App Bar in the app and give support to older versions of Android
 public class ListaAlunosActivity extends AppCompatActivity {
@@ -34,6 +38,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         // Set up FAB (floating action button) for new student
         configuraFabNovoAluno();
+
+        // Create students instances to be shown on main view
+        dao.salva(new Aluno(
+                "Dênis Silva Oliveira",
+                "+55 47 99683-6675",
+                "dns.oliv@gmail.com"));
+        dao.salva(new Aluno(
+                "Nadia Silva Oliveira",
+                "+55 19 3879-2656",
+                "nadia@gmail.com"));
     }
 
     @Override
@@ -71,5 +85,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 this,
                 android.R.layout.simple_list_item_1,
                 dao.todos()));
+
+        listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
+                Log.i("Posição do Aluno", "onItemClick: " + posicao);
+            }
+        });
     }
 }
