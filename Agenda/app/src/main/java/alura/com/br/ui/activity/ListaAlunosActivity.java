@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
 import alura.com.br.model.Aluno;
@@ -81,15 +83,21 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
 
         // Load the list of students in the ListView
+        final List<Aluno> alunos = dao.todos();
         listaDeAlunos.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                dao.todos()));
+                alunos));
 
         listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
-                Log.i("Posição do Aluno", "onItemClick: " + posicao);
+                Aluno alunoEscolhido = alunos.get(posicao);
+                Intent vaiParaFormularioActivity = new Intent(
+                        ListaAlunosActivity.this,
+                        FormularioAlunoActivity.class);
+                vaiParaFormularioActivity.putExtra("aluno", alunoEscolhido);
+                startActivity(vaiParaFormularioActivity);
             }
         });
     }
