@@ -17,6 +17,9 @@ public class Aluno implements Serializable {
         this.email = email;
     }
 
+    public Aluno() {
+    }
+
     public String getNome() {
         return this.nome;
     }
@@ -55,4 +58,7 @@ public class Aluno implements Serializable {
         return this.nome;
     }
 
+    public boolean temIdValido() {
+        return this.id > 0;
+    }
 }

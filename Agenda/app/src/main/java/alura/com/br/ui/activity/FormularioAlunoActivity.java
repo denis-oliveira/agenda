@@ -35,10 +35,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         configuraBotaoSalvar();
 
         Intent dados = getIntent();
-        this.aluno = (Aluno) dados.getSerializableExtra("aluno");
-        this.campoNome.setText(this.aluno.getNome());
-        this.campoTelefone.setText(this.aluno.getTelefone());
-        this.campoEmail.setText(this.aluno.getEmail());
+        if (dados.hasExtra("aluno")) {
+            this.aluno = (Aluno) dados.getSerializableExtra("aluno");
+            this.campoNome.setText(this.aluno.getNome());
+            this.campoTelefone.setText(this.aluno.getTelefone());
+            this.campoEmail.setText(this.aluno.getEmail());
+        } else {
+            aluno = new Aluno();
+        }
     }
 
     private void inicializacaoDosCampos() {
@@ -54,13 +58,16 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                // Create a student
-//                Aluno alunoCriado = preencheAluno();
-//
-//                // Save student to the DAO and finish Activity
-//                salva(alunoCriado);
+                // Fill up student attribute with information of the text boxes
                 preencheAluno();
-                dao.edita(aluno);
+                // Check if student ID is valid
+                if(aluno.temIdValido()) {
+                    // Edit an existing student
+                    dao.edita(aluno);
+                } else {
+                    // Save a new student
+                   dao.salva(aluno);
+                }
                 // Finish the activity
                 finish();
             }
@@ -78,12 +85,5 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         this.aluno.setNome(nome);
         this.aluno.setTelefone(telefone);
         this.aluno.setEmail(email);
-    }
-
-    private void salva(Aluno aluno) {
-        // Save new student to the DAO
-        this.dao.salva(aluno);
-        // Finish the activity
-        finish();
     }
 }
