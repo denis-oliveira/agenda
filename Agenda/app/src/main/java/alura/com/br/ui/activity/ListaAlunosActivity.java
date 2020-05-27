@@ -75,7 +75,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void abreFormularioAlunoActivity() {
-        startActivity(new Intent(this, FormularioAlunoActivity.class));
+        startActivity(new Intent(
+                ListaAlunosActivity.this,
+                FormularioAlunoActivity.class));
     }
 
     private void configuraLista() {

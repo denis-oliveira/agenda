@@ -19,6 +19,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoTelefone;
     private EditText campoEmail;
     private final AlunoDAO dao = new AlunoDAO();
+    private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +38,16 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         configuraBotaoSalvar();
 
         Intent dados = getIntent();
-        Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
-        campoNome.setText(aluno.getNome());
-        campoTelefone.setText(aluno.getTelefone());
-        campoEmail.setText(aluno.getEmail());
+        this.aluno = (Aluno) dados.getSerializableExtra("aluno");
+        this.campoNome.setText(this.aluno.getNome());
+        this.campoTelefone.setText(this.aluno.getTelefone());
+        this.campoEmail.setText(this.aluno.getEmail());
     }
 
     private void inicializacaoDosCampos() {
-        campoNome = findViewById(R.id.activity_formulario_aluno_nome);
-        campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
-        campoEmail = findViewById(R.id.activity_formulario_aluno_email);
+        this.campoNome = findViewById(R.id.activity_formulario_aluno_nome);
+        this.campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
+        this.campoEmail = findViewById(R.id.activity_formulario_aluno_email);
     }
 
     private void configuraBotaoSalvar() {
@@ -57,29 +58,33 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // Create a student
-                Aluno alunoCriado = criaAluno();
-
-                // Save student to the DAO
-                salva(alunoCriado);
+//                // Create a student
+//                Aluno alunoCriado = preencheAluno();
+//
+//                // Save student to the DAO and finish Activity
+//                salva(alunoCriado);
+                preencheAluno();
+                dao.edita(aluno);
+                // Finish the activity
+                finish();
             }
         });
     }
 
-    private Aluno criaAluno() {
+    private void preencheAluno() {
         // Get text from the text boxes
-        String nome = campoNome.getText().toString();
-        String telefone = campoTelefone.getText().toString();
-        String email = campoEmail.getText().toString();
+        String nome = this.campoNome.getText().toString();
+        String telefone = this.campoTelefone.getText().toString();
+        String email = this.campoEmail.getText().toString();
 
-        // Classe to store student information
-        return new Aluno(nome, telefone, email);
+        this.aluno.setNome(nome);
+        this.aluno.setTelefone(telefone);
+        this.aluno.setEmail(email);
     }
 
     private void salva(Aluno aluno) {
         // Save new student to the DAO
-        dao.salva(aluno);
-
+        this.dao.salva(aluno);
         // Finish the activity
         finish();
     }

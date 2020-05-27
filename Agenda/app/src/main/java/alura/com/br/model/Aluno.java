@@ -6,9 +6,10 @@ import java.io.Serializable;
 
 // Class to store student information
 public class Aluno implements Serializable {
-    private final String nome;
-    private final String telefone;
-    private final String email;
+    private int id = 0;
+    private String nome;
+    private String telefone;
+    private String email;
 
     public Aluno(String nome, String telefone, String email) {
         this.nome = nome;
@@ -20,12 +21,32 @@ public class Aluno implements Serializable {
         return this.nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public String getTelefone() {
         return this.telefone;
     }
 
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     public String getEmail() {
         return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @NonNull
@@ -33,4 +54,5 @@ public class Aluno implements Serializable {
     public String toString() {
         return this.nome;
     }
+
 }
