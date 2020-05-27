@@ -2,12 +2,10 @@ package alura.com.br.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +17,8 @@ import java.util.List;
 import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
 import alura.com.br.model.Aluno;
+
+import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
 // Using AppCompatActivity to load App Bar in the app and give support to older versions of Android
 public class ListaAlunosActivity extends AppCompatActivity {
@@ -69,12 +69,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
         botaoNovoAluno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                abreFormularioAlunoActivity();
+                abreFormularioModoInsereAluno();
             }
         });
     }
 
-    private void abreFormularioAlunoActivity() {
+    private void abreFormularioModoInsereAluno() {
         startActivity(new Intent(
                 ListaAlunosActivity.this,
                 FormularioAlunoActivity.class));
@@ -83,24 +83,36 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private void configuraLista() {
         // Get view of the List View created in the layout using its ID
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
-
         // Load the list of students in the ListView
         final List<Aluno> alunos = this.dao.todos();
+        // Set up the adapter
+        configuraAdapter(listaDeAlunos, alunos);
+        // Set up listener of ListView item click
+        configuraListenerDeCliquePorItem(listaDeAlunos);
+    }
+
+    private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos) {
         listaDeAlunos.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 alunos));
+    }
 
+    private void configuraListenerDeCliquePorItem(ListView listaDeAlunos) {
         listaDeAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
-                Aluno alunoEscolhido = alunos.get(posicao);
-                Intent vaiParaFormularioActivity = new Intent(
-                        ListaAlunosActivity.this,
-                        FormularioAlunoActivity.class);
-                vaiParaFormularioActivity.putExtra("aluno", alunoEscolhido);
-                startActivity(vaiParaFormularioActivity);
+                Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+                abreFormularioModoEditaAluno(alunoEscolhido);
             }
         });
+    }
+
+    private void abreFormularioModoEditaAluno(Aluno aluno) {
+        Intent vaiParaFormularioActivity = new Intent(
+                ListaAlunosActivity.this,
+                FormularioAlunoActivity.class);
+        vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
+        startActivity(vaiParaFormularioActivity);
     }
 }

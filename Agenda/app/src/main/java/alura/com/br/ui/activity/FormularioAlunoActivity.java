@@ -12,9 +12,12 @@ import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
 import alura.com.br.model.Aluno;
 
+import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
+
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    private static final String TITULO_APP_BAR = "Informações do Aluno";
+    private static final String TITULO_APP_BAR_NOVO_ALUNO = "Novo Aluno";
+    private static final String TITULO_APP_BAR_EDITA_ALUNO = "Edita Aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
@@ -27,22 +30,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         // Set view content
         setContentView(R.layout.activity_formulario_aluno);
-        // Change the title shown on the app bar
-        setTitle(FormularioAlunoActivity.TITULO_APP_BAR);
         // Creates views for the layout text boxes
         inicializacaoDosCampos();
         // Set up save button and handle click events
         configuraBotaoSalvar();
-
-        Intent dados = getIntent();
-        if (dados.hasExtra("aluno")) {
-            this.aluno = (Aluno) dados.getSerializableExtra("aluno");
-            this.campoNome.setText(this.aluno.getNome());
-            this.campoTelefone.setText(this.aluno.getTelefone());
-            this.campoEmail.setText(this.aluno.getEmail());
-        } else {
-            aluno = new Aluno();
-        }
+        // Load student information
+        carregaAluno();
     }
 
     private void inicializacaoDosCampos() {
@@ -58,20 +51,24 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Fill up student attribute with information of the text boxes
-                preencheAluno();
-                // Check if student ID is valid
-                if(aluno.temIdValido()) {
-                    // Edit an existing student
-                    dao.edita(aluno);
-                } else {
-                    // Save a new student
-                   dao.salva(aluno);
-                }
-                // Finish the activity
-                finish();
+                finalizaFormulario();
             }
         });
+    }
+
+    private void finalizaFormulario() {
+        // Fill up student attribute with information of the text boxes
+        preencheAluno();
+        // Check if student ID is valid
+        if(aluno.temIdValido()) {
+            // Edit an existing student
+            dao.edita(aluno);
+        } else {
+            // Save a new student
+           dao.salva(aluno);
+        }
+        // Finish the activity
+        finish();
     }
 
     // Fill up student attribute with information of the text boxes
@@ -86,4 +83,25 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         this.aluno.setTelefone(telefone);
         this.aluno.setEmail(email);
     }
+
+    private void carregaAluno() {
+        Intent dados = getIntent();
+        if (dados.hasExtra(CHAVE_ALUNO)) {
+            // Change the title shown on the app bar
+            setTitle(FormularioAlunoActivity.TITULO_APP_BAR_EDITA_ALUNO);
+            this.aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
+            preencheCampos();
+        } else {
+            // Change the title shown on the app bar
+            setTitle(FormularioAlunoActivity.TITULO_APP_BAR_NOVO_ALUNO);
+            aluno = new Aluno();
+        }
+    }
+
+    private void preencheCampos() {
+        this.campoNome.setText(this.aluno.getNome());
+        this.campoTelefone.setText(this.aluno.getTelefone());
+        this.campoEmail.setText(this.aluno.getEmail());
+    }
 }
+
