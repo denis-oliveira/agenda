@@ -52,13 +52,13 @@ public class Aluno implements Serializable {
         this.id = id;
     }
 
+    public boolean temIdValido() {
+        return this.id > 0;
+    }
+
     @NonNull
     @Override
     public String toString() {
         return this.nome;
-    }
-
-    public boolean temIdValido() {
-        return this.id > 0;
     }
 }
