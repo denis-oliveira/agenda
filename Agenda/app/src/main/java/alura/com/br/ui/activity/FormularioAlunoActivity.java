@@ -12,13 +12,17 @@ import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
 import alura.com.br.model.Aluno;
 
+import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
+
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    private static final String TITULO_APP_BAR = "Informações do Aluno";
+    private static final String TITULO_APP_BAR_NOVO_ALUNO = "Novo Aluno";
+    private static final String TITULO_APP_BAR_EDITA_ALUNO = "Edita Aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
     private final AlunoDAO dao = new AlunoDAO();
+    private Aluno aluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,21 +30,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         // Set view content
         setContentView(R.layout.activity_formulario_aluno);
-
-        // Change the title shown on the app bar
-        setTitle(TITULO_APP_BAR);
-
         // Creates views for the layout text boxes
         inicializacaoDosCampos();
-
         // Set up save button and handle click events
         configuraBotaoSalvar();
-
-        Intent dados = getIntent();
-        Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
-        campoNome.setText(aluno.getNome());
-        campoTelefone.setText(aluno.getTelefone());
-        campoEmail.setText(aluno.getEmail());
+        // Load student information
+        carregaAluno();
     }
 
     private void inicializacaoDosCampos() {
@@ -56,31 +51,57 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // Create a student
-                Aluno alunoCriado = criaAluno();
-
-                // Save student to the DAO
-                salva(alunoCriado);
+                finalizaFormulario();
             }
         });
     }
 
-    private Aluno criaAluno() {
+    private void finalizaFormulario() {
+        // Fill up student attribute with information of the text boxes
+        preencheAluno();
+        // Check if student ID is valid
+        if(aluno.temIdValido()) {
+            // Edit an existing student
+            dao.edita(aluno);
+        } else {
+            // Save a new student
+           dao.salva(aluno);
+        }
+        // Finish the activity
+        finish();
+    }
+
+    // Fill up student attribute with information of the text boxes
+    private void preencheAluno() {
         // Get text from the text boxes
         String nome = campoNome.getText().toString();
         String telefone = campoTelefone.getText().toString();
         String email = campoEmail.getText().toString();
 
-        // Classe to store student information
-        return new Aluno(nome, telefone, email);
+        // Fill up student attribute with information of the text boxes
+        aluno.setNome(nome);
+        aluno.setTelefone(telefone);
+        aluno.setEmail(email);
     }
 
-    private void salva(Aluno aluno) {
-        // Save new student to the DAO
-        dao.salva(aluno);
+    private void carregaAluno() {
+        Intent dados = getIntent();
+        if (dados.hasExtra(CHAVE_ALUNO)) {
+            // Change the title shown on the app bar
+            setTitle(FormularioAlunoActivity.TITULO_APP_BAR_EDITA_ALUNO);
+            aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
+            preencheCampos();
+        } else {
+            // Change the title shown on the app bar
+            setTitle(FormularioAlunoActivity.TITULO_APP_BAR_NOVO_ALUNO);
+            aluno = new Aluno();
+        }
+    }
 
-        // Finish the activity
-        finish();
+    private void preencheCampos() {
+        campoNome.setText(aluno.getNome());
+        campoTelefone.setText(aluno.getTelefone());
+        campoEmail.setText(aluno.getEmail());
     }
 }
+
