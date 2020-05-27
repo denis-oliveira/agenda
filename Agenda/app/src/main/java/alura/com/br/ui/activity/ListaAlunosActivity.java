@@ -2,6 +2,7 @@ package alura.com.br.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -89,6 +90,24 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configuraAdapter(listaDeAlunos, alunos);
         // Set up listener of ListView item click
         configuraListenerDeCliquePorItem(listaDeAlunos);
+
+        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(
+                    AdapterView<?> adapterView,
+                    View view,
+                    int posicao,
+                    long id) {
+
+                Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+
+                dao.remove(alunoEscolhido);
+
+                // false return indicates you will not consume the event and wil allow other events
+                // to happen (i.e. normal click). true returns indicate you will consume the event.
+                return true;
+            }
+        });
     }
 
     private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos) {
