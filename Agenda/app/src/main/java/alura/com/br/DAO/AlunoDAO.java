@@ -30,6 +30,6 @@ public class AlunoDAO {
     }
 
     public List<Aluno> todos() {
-        return new ArrayList<>(alunos);
+        return new ArrayList<>(AlunoDAO.alunos);
     }
 }

@@ -27,13 +27,10 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         // Set view content
         setContentView(R.layout.activity_formulario_aluno);
-
         // Change the title shown on the app bar
-        setTitle(TITULO_APP_BAR);
-
+        setTitle(FormularioAlunoActivity.TITULO_APP_BAR);
         // Creates views for the layout text boxes
         inicializacaoDosCampos();
-
         // Set up save button and handle click events
         configuraBotaoSalvar();
 
@@ -57,7 +54,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 //                // Create a student
 //                Aluno alunoCriado = preencheAluno();
 //
@@ -71,12 +67,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         });
     }
 
+    // Fill up student attribute with information of the text boxes
     private void preencheAluno() {
         // Get text from the text boxes
         String nome = this.campoNome.getText().toString();
         String telefone = this.campoTelefone.getText().toString();
         String email = this.campoEmail.getText().toString();
 
+        // Fill up student attribute with information of the text boxes
         this.aluno.setNome(nome);
         this.aluno.setTelefone(telefone);
         this.aluno.setEmail(email);

@@ -36,17 +36,17 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
 
         // Change the title shown on the app bar
-        setTitle(TITULO_APP_BAR);
+        setTitle(ListaAlunosActivity.TITULO_APP_BAR);
 
         // Set up FAB (floating action button) for new student
         configuraFabNovoAluno();
 
         // Create students instances to be shown on main view
-        dao.salva(new Aluno(
+        this.dao.salva(new Aluno(
                 "Dênis Silva Oliveira",
                 "+55 47 99683-6675",
                 "dns.oliv@gmail.com"));
-        dao.salva(new Aluno(
+        this.dao.salva(new Aluno(
                 "Nadia Silva Oliveira",
                 "+55 19 3879-2656",
                 "nadia@gmail.com"));
@@ -85,7 +85,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
 
         // Load the list of students in the ListView
-        final List<Aluno> alunos = dao.todos();
+        final List<Aluno> alunos = this.dao.todos();
         listaDeAlunos.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
