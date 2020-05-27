@@ -36,17 +36,17 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
 
         // Change the title shown on the app bar
-        setTitle(ListaAlunosActivity.TITULO_APP_BAR);
+        setTitle(TITULO_APP_BAR);
 
         // Set up FAB (floating action button) for new student
         configuraFabNovoAluno();
 
         // Create students instances to be shown on main view
-        this.dao.salva(new Aluno(
+        dao.salva(new Aluno(
                 "Dênis Silva Oliveira",
                 "+55 47 99683-6675",
                 "dns.oliv@gmail.com"));
-        this.dao.salva(new Aluno(
+        dao.salva(new Aluno(
                 "Nadia Silva Oliveira",
                 "+55 19 3879-2656",
                 "nadia@gmail.com"));
@@ -84,7 +84,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         // Get view of the List View created in the layout using its ID
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
         // Load the list of students in the ListView
-        final List<Aluno> alunos = this.dao.todos();
+        final List<Aluno> alunos = dao.todos();
         // Set up the adapter
         configuraAdapter(listaDeAlunos, alunos);
         // Set up listener of ListView item click
@@ -110,7 +110,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void abreFormularioModoEditaAluno(Aluno aluno) {
         Intent vaiParaFormularioActivity = new Intent(
-                ListaAlunosActivity.this,
+                this,
                 FormularioAlunoActivity.class);
         vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
         startActivity(vaiParaFormularioActivity);

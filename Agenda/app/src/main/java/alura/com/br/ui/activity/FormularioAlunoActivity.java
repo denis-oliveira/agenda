@@ -39,9 +39,9 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void inicializacaoDosCampos() {
-        this.campoNome = findViewById(R.id.activity_formulario_aluno_nome);
-        this.campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
-        this.campoEmail = findViewById(R.id.activity_formulario_aluno_email);
+        campoNome = findViewById(R.id.activity_formulario_aluno_nome);
+        campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
+        campoEmail = findViewById(R.id.activity_formulario_aluno_email);
     }
 
     private void configuraBotaoSalvar() {
@@ -74,14 +74,14 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     // Fill up student attribute with information of the text boxes
     private void preencheAluno() {
         // Get text from the text boxes
-        String nome = this.campoNome.getText().toString();
-        String telefone = this.campoTelefone.getText().toString();
-        String email = this.campoEmail.getText().toString();
+        String nome = campoNome.getText().toString();
+        String telefone = campoTelefone.getText().toString();
+        String email = campoEmail.getText().toString();
 
         // Fill up student attribute with information of the text boxes
-        this.aluno.setNome(nome);
-        this.aluno.setTelefone(telefone);
-        this.aluno.setEmail(email);
+        aluno.setNome(nome);
+        aluno.setTelefone(telefone);
+        aluno.setEmail(email);
     }
 
     private void carregaAluno() {
@@ -89,7 +89,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         if (dados.hasExtra(CHAVE_ALUNO)) {
             // Change the title shown on the app bar
             setTitle(FormularioAlunoActivity.TITULO_APP_BAR_EDITA_ALUNO);
-            this.aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
+            aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
             preencheCampos();
         } else {
             // Change the title shown on the app bar
@@ -99,9 +99,9 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     }
 
     private void preencheCampos() {
-        this.campoNome.setText(this.aluno.getNome());
-        this.campoTelefone.setText(this.aluno.getTelefone());
-        this.campoEmail.setText(this.aluno.getEmail());
+        campoNome.setText(aluno.getNome());
+        campoTelefone.setText(aluno.getTelefone());
+        campoEmail.setText(aluno.getEmail());
     }
 }
 

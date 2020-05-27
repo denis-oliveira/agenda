@@ -21,7 +21,7 @@ public class Aluno implements Serializable {
     }
 
     public String getNome() {
-        return this.nome;
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -29,7 +29,7 @@ public class Aluno implements Serializable {
     }
 
     public String getTelefone() {
-        return this.telefone;
+        return telefone;
     }
 
     public void setTelefone(String telefone) {
@@ -37,7 +37,7 @@ public class Aluno implements Serializable {
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -53,12 +53,12 @@ public class Aluno implements Serializable {
     }
 
     public boolean temIdValido() {
-        return this.id > 0;
+        return id > 0;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return this.nome;
+        return nome;
     }
 }
