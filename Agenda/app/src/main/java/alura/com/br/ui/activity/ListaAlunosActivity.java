@@ -136,11 +136,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Updates ListView adapter
-        atualizaViewDeAlunos();
+        // Updates ListView adapter with updated students list
+        atualizaAlunos();
     }
 
-    private void atualizaViewDeAlunos() {
+    private void atualizaAlunos() {
         // Removes all elements from the ListView adapter
         adapter.clear();
         // Adds all elements to the ListView adapter
