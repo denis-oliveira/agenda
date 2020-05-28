@@ -33,16 +33,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         // Load the layout
         setContentView(R.layout.activity_lista_alunos);
-
         // Change the title shown on the app bar
         setTitle(TITULO_APP_BAR);
-
         // Set up FAB (floating action button) for new student
         configuraFabNovoAluno();
-
         // Set up list view 
         configuraLista();
-
         // Create students instances to be shown on main view
         dao.salva(new Aluno(
                 "Dênis Silva Oliveira",
@@ -55,7 +51,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraFabNovoAluno() {
-        // get fab for new student button
+        // Gets FAB for new student addition button
         FloatingActionButton botaoNovoAluno =
                 findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
 
@@ -75,13 +71,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraLista() {
-        // Get view of the List View created in the layout using its ID
+        // Gets view of the List View created in the layout using its ID
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
         // Set up the ListView adapter
         configuraAdapter(listaDeAlunos);
         // Set up listener of ListView item click
         configuraListenerDeCliquePorItem(listaDeAlunos);
-
+        // Set up listener of ListView item long click
         configuraListenerDeCliqueLongoPorItem(listaDeAlunos);
     }
 
@@ -140,12 +136,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Removes all elements from the list
+        // Updates ListView adapter
         atualizaViewDeAlunos();
     }
 
     private void atualizaViewDeAlunos() {
+        // Removes all elements from the ListView adapter
         adapter.clear();
+        // Adds all elements to the ListView adapter
         adapter.addAll(dao.todos());
     }
 
