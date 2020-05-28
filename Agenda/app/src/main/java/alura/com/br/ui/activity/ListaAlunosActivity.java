@@ -27,6 +27,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private static final String TITULO_APP_BAR = "Lista de Alunos";
     // Class to store the list of students
     private final AlunoDAO dao = new AlunoDAO();
+    private ArrayAdapter<Aluno> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
         // Load the list of students in the ListView
         final List<Aluno> alunos = dao.todos();
-        // Set up the adapter
+        // Set up the ListView adapter
         configuraAdapter(listaDeAlunos, alunos);
         // Set up listener of ListView item click
         configuraListenerDeCliquePorItem(listaDeAlunos);
@@ -103,6 +104,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
                 dao.remove(alunoEscolhido);
 
+                adapter.remove(alunoEscolhido);
                 // false return indicates you will not consume the event and wil allow other events
                 // to happen (i.e. normal click). true returns indicate you will consume the event.
                 return true;
@@ -111,10 +113,11 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos) {
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(
+        adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                alunos));
+                alunos);
+        listaDeAlunos.setAdapter(adapter);
     }
 
     private void configuraListenerDeCliquePorItem(ListView listaDeAlunos) {
