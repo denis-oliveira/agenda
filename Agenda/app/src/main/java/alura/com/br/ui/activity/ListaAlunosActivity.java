@@ -2,6 +2,7 @@ package alura.com.br.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,8 +23,7 @@ import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private static final String TITULO_APP_BAR = "Lista de Alunos";
-    // Class to store the list of students
-    private final AlunoDAO dao = new AlunoDAO();
+    private final AlunoDAO dao = new AlunoDAO(); // Class to store the list of students
     private ArrayAdapter<Aluno> adapter;
 
     @Override
@@ -48,6 +48,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 "Nadia Silva Oliveira",
                 "+55 19 3879-2656",
                 "nadia@gmail.com"));
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add("Remover");
     }
 
     private void configuraFabNovoAluno() {
@@ -77,8 +83,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configuraAdapter(listaDeAlunos);
         // Set up listener of ListView item click
         configuraListenerDeCliquePorItem(listaDeAlunos);
-        // Set up listener of ListView item long click
-        configuraListenerDeCliqueLongoPorItem(listaDeAlunos);
+        // Register context menu for ListView
+        registerForContextMenu(listaDeAlunos);
     }
 
     private void configuraAdapter(ListView listaDeAlunos) {
@@ -104,25 +110,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 FormularioAlunoActivity.class);
         vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
         startActivity(vaiParaFormularioActivity);
-    }
-
-    private void configuraListenerDeCliqueLongoPorItem(ListView listaDeAlunos) {
-        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(
-                    AdapterView<?> adapterView,
-                    View view,
-                    int posicao,
-                    long id) {
-
-                Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
-
-                remove(alunoEscolhido);
-                // false return indicates you will not consume the event and wil allow other events
-                // to happen (i.e. normal click). true returns indicate you will consume the event.
-                return true;
-            }
-        });
     }
 
     private void remove(Aluno aluno) {
