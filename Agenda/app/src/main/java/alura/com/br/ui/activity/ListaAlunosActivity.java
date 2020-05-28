@@ -62,8 +62,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
     // Handles context menu option click
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        CharSequence tituloDoMenu = item.getTitle();
-        if(tituloDoMenu.equals("Remover")) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.activity_lista_alunos_menu_remover) {
             AdapterView.AdapterContextMenuInfo menuInfo =
                     (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
