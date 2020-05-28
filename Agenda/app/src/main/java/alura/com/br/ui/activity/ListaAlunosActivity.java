@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
 import alura.com.br.DAO.AlunoDAO;
 import alura.com.br.R;
 import alura.com.br.model.Aluno;
@@ -26,6 +24,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private static final String TITULO_APP_BAR = "Lista de Alunos";
     // Class to store the list of students
     private final AlunoDAO dao = new AlunoDAO();
+    private ArrayAdapter<Aluno> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,13 +33,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         // Load the layout
         setContentView(R.layout.activity_lista_alunos);
-
         // Change the title shown on the app bar
         setTitle(TITULO_APP_BAR);
-
         // Set up FAB (floating action button) for new student
         configuraFabNovoAluno();
-
+        // Set up list view 
+        configuraLista();
         // Create students instances to be shown on main view
         dao.salva(new Aluno(
                 "Dênis Silva Oliveira",
@@ -52,16 +50,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 "nadia@gmail.com"));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Update list view with the list of students
-        configuraLista();
-    }
-
     private void configuraFabNovoAluno() {
-        // get fab for new student button
+        // Gets FAB for new student addition button
         FloatingActionButton botaoNovoAluno =
                 findViewById(R.id.activity_lista_alunos_fab_novo_aluno);
 
@@ -81,21 +71,21 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraLista() {
-        // Get view of the List View created in the layout using its ID
+        // Gets view of the List View created in the layout using its ID
         ListView listaDeAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        // Load the list of students in the ListView
-        final List<Aluno> alunos = dao.todos();
-        // Set up the adapter
-        configuraAdapter(listaDeAlunos, alunos);
+        // Set up the ListView adapter
+        configuraAdapter(listaDeAlunos);
         // Set up listener of ListView item click
         configuraListenerDeCliquePorItem(listaDeAlunos);
+        // Set up listener of ListView item long click
+        configuraListenerDeCliqueLongoPorItem(listaDeAlunos);
     }
 
-    private void configuraAdapter(ListView listaDeAlunos, List<Aluno> alunos) {
-        listaDeAlunos.setAdapter(new ArrayAdapter<>(
+    private void configuraAdapter(ListView listaDeAlunos) {
+        adapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
-                alunos));
+                android.R.layout.simple_list_item_1);
+        listaDeAlunos.setAdapter(adapter);
     }
 
     private void configuraListenerDeCliquePorItem(ListView listaDeAlunos) {
@@ -115,4 +105,46 @@ public class ListaAlunosActivity extends AppCompatActivity {
         vaiParaFormularioActivity.putExtra(CHAVE_ALUNO, aluno);
         startActivity(vaiParaFormularioActivity);
     }
+
+    private void configuraListenerDeCliqueLongoPorItem(ListView listaDeAlunos) {
+        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(
+                    AdapterView<?> adapterView,
+                    View view,
+                    int posicao,
+                    long id) {
+
+                Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
+
+                remove(alunoEscolhido);
+                // false return indicates you will not consume the event and wil allow other events
+                // to happen (i.e. normal click). true returns indicate you will consume the event.
+                return true;
+            }
+        });
+    }
+
+    private void remove(Aluno aluno) {
+        // Removes student from the DAO
+        dao.remove(aluno);
+        // Removes student from ListView adapter view
+        adapter.remove(aluno);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Updates ListView adapter
+        atualizaViewDeAlunos();
+    }
+
+    private void atualizaViewDeAlunos() {
+        // Removes all elements from the ListView adapter
+        adapter.clear();
+        // Adds all elements to the ListView adapter
+        adapter.addAll(dao.todos());
+    }
+
 }
