@@ -52,12 +52,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 "nadia@gmail.com"));
     }
 
+    // Creates context menu for long click
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add("Remover");
     }
 
+    // Handles context menu option click
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo =
