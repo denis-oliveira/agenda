@@ -1,13 +1,19 @@
 package alura.com.br.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,8 +28,7 @@ import static alura.com.br.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 public class ListaAlunosActivity extends AppCompatActivity {
 
     private static final String TITULO_APP_BAR = "Lista de Alunos";
-    // Class to store the list of students
-    private final AlunoDAO dao = new AlunoDAO();
+    private final AlunoDAO dao = new AlunoDAO(); // Class to store the list of students
     private ArrayAdapter<Aluno> adapter;
 
     @Override
@@ -35,6 +40,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
         // Change the title shown on the app bar
         setTitle(TITULO_APP_BAR);
+        // Set up app bar (action bar) color
+        configuraCorDaAppBar();
         // Set up FAB (floating action button) for new student
         configuraFabNovoAluno();
         // Set up list view 
@@ -45,9 +52,47 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 "+55 47 99683-6675",
                 "dns.oliv@gmail.com"));
         dao.salva(new Aluno(
-                "Nadia Silva Oliveira",
-                "+55 19 3879-2656",
-                "nadia@gmail.com"));
+                "Michel Pereira",
+                "+55 47 99875-4582",
+                "michel@gmail.com"));
+    }
+
+    private void configuraCorDaAppBar() {
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        // Define ColorDrawable object and parse color using parseColor method with color hash code
+        // as its parameter
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#CF1A0D"));
+        // Se BackgroundDrawwable
+        actionBar.setBackgroundDrawable(colorDrawable);
+    }
+
+    // Creates context menu for long click
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
+    }
+
+    // Handles context menu option click
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.activity_lista_alunos_menu_remover) {
+            AdapterView.AdapterContextMenuInfo menuInfo =
+                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+            remove(alunoEscolhido);
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    private void remove(Aluno aluno) {
+        // Removes student from the DAO
+        dao.remove(aluno);
+        // Removes student from ListView adapter view
+        adapter.remove(aluno);
     }
 
     private void configuraFabNovoAluno() {
@@ -77,8 +122,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configuraAdapter(listaDeAlunos);
         // Set up listener of ListView item click
         configuraListenerDeCliquePorItem(listaDeAlunos);
-        // Set up listener of ListView item long click
-        configuraListenerDeCliqueLongoPorItem(listaDeAlunos);
+        // Register context menu for ListView
+        registerForContextMenu(listaDeAlunos);
     }
 
     private void configuraAdapter(ListView listaDeAlunos) {
@@ -106,41 +151,15 @@ public class ListaAlunosActivity extends AppCompatActivity {
         startActivity(vaiParaFormularioActivity);
     }
 
-    private void configuraListenerDeCliqueLongoPorItem(ListView listaDeAlunos) {
-        listaDeAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(
-                    AdapterView<?> adapterView,
-                    View view,
-                    int posicao,
-                    long id) {
-
-                Aluno alunoEscolhido = (Aluno) adapterView.getItemAtPosition(posicao);
-
-                remove(alunoEscolhido);
-                // false return indicates you will not consume the event and wil allow other events
-                // to happen (i.e. normal click). true returns indicate you will consume the event.
-                return true;
-            }
-        });
-    }
-
-    private void remove(Aluno aluno) {
-        // Removes student from the DAO
-        dao.remove(aluno);
-        // Removes student from ListView adapter view
-        adapter.remove(aluno);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
 
-        // Updates ListView adapter
-        atualizaViewDeAlunos();
+        // Updates ListView adapter with updated students list
+        atualizaAlunos();
     }
 
-    private void atualizaViewDeAlunos() {
+    private void atualizaAlunos() {
         // Removes all elements from the ListView adapter
         adapter.clear();
         // Adds all elements to the ListView adapter
