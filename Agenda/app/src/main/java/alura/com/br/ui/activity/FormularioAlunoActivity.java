@@ -108,12 +108,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         Intent dados = getIntent();
         if (dados.hasExtra(CHAVE_ALUNO)) {
             // Change the title shown on the app bar
-            setTitle(FormularioAlunoActivity.TITULO_APP_BAR_EDITA_ALUNO);
+            setTitle(TITULO_APP_BAR_EDITA_ALUNO);
             aluno = (Aluno) dados.getSerializableExtra(CHAVE_ALUNO);
             preencheCampos();
         } else {
             // Change the title shown on the app bar
-            setTitle(FormularioAlunoActivity.TITULO_APP_BAR_NOVO_ALUNO);
+            setTitle(TITULO_APP_BAR_NOVO_ALUNO);
             aluno = new Aluno();
         }
     }
