@@ -1,6 +1,8 @@
 package alura.com.br.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,6 +40,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
         // Change the title shown on the app bar
         setTitle(TITULO_APP_BAR);
+        // Set up app bar (action bar) color
+        configuraCorDaAppBar();
         // Set up FAB (floating action button) for new student
         configuraFabNovoAluno();
         // Set up list view 
@@ -47,9 +52,20 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 "+55 47 99683-6675",
                 "dns.oliv@gmail.com"));
         dao.salva(new Aluno(
-                "Nadia Silva Oliveira",
-                "+55 19 3879-2656",
-                "nadia@gmail.com"));
+                "Michel Pereira",
+                "+55 47 99875-4582",
+                "michel@gmail.com"));
+    }
+
+    private void configuraCorDaAppBar() {
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        // Define ColorDrawable object and parse color using parseColor method with color hash code
+        // as its parameter
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#CF1A0D"));
+        // Se BackgroundDrawwable
+        actionBar.setBackgroundDrawable(colorDrawable);
     }
 
     // Creates context menu for long click

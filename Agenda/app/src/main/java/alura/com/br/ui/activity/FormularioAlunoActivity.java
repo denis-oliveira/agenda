@@ -1,11 +1,14 @@
 package alura.com.br.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import alura.com.br.DAO.AlunoDAO;
@@ -30,12 +33,25 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         // Set view content
         setContentView(R.layout.activity_formulario_aluno);
+        // Set up app bar (action bar) color
+        configuraCorDaAppBar();
         // Creates views for the layout text boxes
         inicializacaoDosCampos();
         // Set up save button and handle click events
         configuraBotaoSalvar();
         // Load student information
         carregaAluno();
+    }
+
+    private void configuraCorDaAppBar() {
+        // Define ActionBar object
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        // Define ColorDrawable object and parse color using parseColor method with color hash code
+        // as its parameter
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#CF1A0D"));
+        // Se BackgroundDrawwable
+        actionBar.setBackgroundDrawable(colorDrawable);
     }
 
     private void inicializacaoDosCampos() {
