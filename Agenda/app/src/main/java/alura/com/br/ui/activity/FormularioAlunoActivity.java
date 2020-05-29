@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,10 +40,23 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         configuraCorDaAppBar();
         // Creates views for the layout text boxes
         inicializacaoDosCampos();
-        // Set up save button and handle click events
-        configuraBotaoSalvar();
         // Load student information
         carregaAluno();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_formulario_aluno_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.activity_formulario_aluno_menu_salvar) {
+            finalizaFormulario();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void configuraCorDaAppBar() {
@@ -58,18 +74,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         campoNome = findViewById(R.id.activity_formulario_aluno_nome);
         campoTelefone = findViewById(R.id.activity_formulario_aluno_telefone);
         campoEmail = findViewById(R.id.activity_formulario_aluno_email);
-    }
-
-    private void configuraBotaoSalvar() {
-        Button botaoSalvar = findViewById(R.id.activity_formulario_aluno_botao_salvar);
-
-        // Creates listener for button clicks (get click events)
-        botaoSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finalizaFormulario();
-            }
-        });
     }
 
     private void finalizaFormulario() {
