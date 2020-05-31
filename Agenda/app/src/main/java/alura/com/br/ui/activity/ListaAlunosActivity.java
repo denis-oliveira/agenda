@@ -68,26 +68,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(colorDrawable);
     }
 
-    // Creates context menu for long click
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
-    }
-
-    // Handles context menu option click
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
-        if(itemId == R.id.activity_lista_alunos_menu_remover) {
-            AdapterView.AdapterContextMenuInfo menuInfo =
-                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
-            remove(alunoEscolhido);
-        }
-        return super.onContextItemSelected(item);
-    }
-
     private void remove(Aluno aluno) {
         // Removes student from the DAO
         dao.remove(aluno);
@@ -164,6 +144,26 @@ public class ListaAlunosActivity extends AppCompatActivity {
         adapter.clear();
         // Adds all elements to the ListView adapter
         adapter.addAll(dao.todos());
+    }
+
+    // Creates context menu for long click
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.activity_lista_alunos_menu, menu);
+    }
+
+    // Handles context menu option click
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if(itemId == R.id.activity_lista_alunos_menu_remover) {
+            AdapterView.AdapterContextMenuInfo menuInfo =
+                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+            remove(alunoEscolhido);
+        }
+        return super.onContextItemSelected(item);
     }
 
 }
