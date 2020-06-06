@@ -8,7 +8,7 @@
     <TextView android:id="@+id/item_aluno_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:layout_margin="8dp"
         tools:text="Dênis Silva Oliveira" />
 
@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         tools:text="+55 47 3227-7235"/>
 
 </LinearLayout>
