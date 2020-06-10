@@ -8,7 +8,6 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -139,10 +138,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void atualizaAlunos() {
-        // Removes all elements from the ListView adapter
-        adapter.clear();
-        // Adds all elements to the ListView adapter
-        adapter.addAll(dao.todos());
+        // Removes all elements from the ListView adapter and then adds all elements to the
+        // ListView adapter
+        adapter.atualiza(dao.todos());
     }
 
     // Creates context menu for long click
